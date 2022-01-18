@@ -1,0 +1,9 @@
+代码随记
+
+
+冰箱功能：inst:AddTag("fridge")
+
+一.先修改背包可冷藏食品：
+1.普通背包可冷藏食品：用记事本打开游戏目录\data\scripts\prefabs\backpack.lua文件，在inst:AddComponent("inspectable")的下一行插入inst:AddTag("fridge")
+2.小猪包可冷藏食品：用记事本打开游戏目录\data\scripts\prefabs\piggyback.lua文件，在inst:AddComponent("inspectable")的下一行插入inst:AddTag("fridge")
+3.坎普斯背包可冷藏食品：用记事本打开游戏目录\data\scripts\prefabs\krampus_sack.lua文件，在inst:AddComponent("inspectable")的下一行插入inst:AddTag("fridge")

@@ -46,17 +46,20 @@ local function ItemTradeTest(inst, item)
     elseif item.prefab == "silk" then
         return true
     end
-    return true
+    return false
 end
 
 local function OnGemGiven(inst, giver, item)
     if item.prefab == "walrushat" then
         inst.components.whiteberetstatus.dapperness = inst.components.whiteberetstatus.dapperness + 1
-        inst.components.equippable.dapperness = inst.components.whiteberetstatus.dapperness
+        inst.components.equippable.dapperness = inst.components.whiteberetstatus.dapperness * TUNING.DAPPERNESS_MED / 3 + TUNING.DAPPERNESS_MED
         inst.components.fueled.currentfuel = inst.components.fueled.maxfuel
-    elseif item.prefab == "silk" then
+    end
+    
+    if item.prefab == "silk" then
         inst.components.whiteberetstatus.insulator = inst.components.whiteberetstatus.insulator + 1
-        inst.components.insulator:SetInsulation(inst.components.whiteberetstatus.insulator)
+        inst.components.insulator:SetInsulation(TUNING.INSULATION_MED + inst.components.whiteberetstatus.insulator)
+    end
     inst.SoundEmitter:PlaySound("dontstarve/common/telebase_gemplace")
 end
 
@@ -87,12 +90,10 @@ local function fn(Sim)
     
     inst:AddComponent("equippable")
     inst.components.equippable.equipslot = EQUIPSLOTS.HEAD
-    inst.components.equippable.dapperness = inst.components.whiteberetstatus.dapperness
     inst.components.equippable:SetOnEquip( onequip )
     inst.components.equippable:SetOnUnequip( onunequip )
 
     inst:AddComponent("insulator")
-    inst.components.insulator:SetInsulation(inst.components.whiteberetstatus.insulator)
 
     inst:AddComponent("trader")
     inst.components.trader:SetAbleToAcceptTest(ItemTradeTest)
@@ -102,6 +103,11 @@ local function fn(Sim)
     inst.components.fueled.fueltype = FUELTYPE.USAGE
     inst.components.fueled:InitializeFuelLevel(TUNING.WALRUSHAT_PERISHTIME)
     inst.components.fueled:SetDepletedFn(inst.Remove)
+
+    inst:DoTaskInTime(.2, function()
+        inst.components.equippable.dapperness = inst.components.whiteberetstatus.dapperness*TUNING.DAPPERNESS_MED/3 +TUNING.DAPPERNESS_MED
+        inst.components.insulator:SetInsulation(TUNING.INSULATION_MED + inst.components.whiteberetstatus.insulator)
+    end)
     
     return inst
 end

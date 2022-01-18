@@ -1,7 +1,7 @@
 local whiteberetstatus = Class(function(self, inst)
     self.inst = inst
-    self.insulator = 120
-    self.dapperness = 3
+    self.insulator = 0
+    self.dapperness = 0
 end,
 nil,
 {

@@ -41,18 +41,23 @@ end
 local function ItemTradeTest(inst, item)
     if item == nil then
         return false
-    elseif item.prefab ~= "walrushat" then
-        return false
+    elseif item.prefab == "walrushat" then
+        return true
+    elseif item.prefab == "silk" then
+        return true
     end
     return true
 end
 
 local function OnGemGiven(inst, giver, item)
-    inst.components.whiteberetstatus.level = 1
-    inst.components.equippable.dapperness = TUNING.DAPPERNESS_MED*3
+    if item.prefab == "walrushat" then
+        inst.components.whiteberetstatus.dapperness = inst.components.whiteberetstatus.dapperness + 1
+        inst.components.equippable.dapperness = inst.components.whiteberetstatus.dapperness
+        inst.components.fueled.currentfuel = inst.components.fueled.maxfuel
+    elseif item.prefab == "silk" then
+        inst.components.whiteberetstatus.insulator = inst.components.whiteberetstatus.insulator + 1
+        inst.components.insulator:SetInsulation(inst.components.whiteberetstatus.insulator)
     inst.SoundEmitter:PlaySound("dontstarve/common/telebase_gemplace")
-    inst.components.fueled.currentfuel = inst.components.fueled.maxfuel
-    inst:RemoveComponent("trader")
 end
 
 local function fn(Sim)
@@ -82,12 +87,12 @@ local function fn(Sim)
     
     inst:AddComponent("equippable")
     inst.components.equippable.equipslot = EQUIPSLOTS.HEAD
-    inst.components.equippable.dapperness = TUNING.DAPPERNESS_MED
+    inst.components.equippable.dapperness = inst.components.whiteberetstatus.dapperness
     inst.components.equippable:SetOnEquip( onequip )
     inst.components.equippable:SetOnUnequip( onunequip )
 
     inst:AddComponent("insulator")
-    inst.components.insulator:SetInsulation(TUNING.INSULATION_MED)
+    inst.components.insulator:SetInsulation(inst.components.whiteberetstatus.insulator)
 
     inst:AddComponent("trader")
     inst.components.trader:SetAbleToAcceptTest(ItemTradeTest)
@@ -97,13 +102,6 @@ local function fn(Sim)
     inst.components.fueled.fueltype = FUELTYPE.USAGE
     inst.components.fueled:InitializeFuelLevel(TUNING.WALRUSHAT_PERISHTIME)
     inst.components.fueled:SetDepletedFn(inst.Remove)
-
-    inst:DoTaskInTime(.2, function()
-        if inst.components.whiteberetstatus.level == 1 then
-            inst.components.equippable.dapperness = TUNING.DAPPERNESS_MED*3
-            inst:RemoveComponent("trader")
-        end
-    end)
     
     return inst
 end

@@ -7,3 +7,22 @@
 1.普通背包可冷藏食品：用记事本打开游戏目录\data\scripts\prefabs\backpack.lua文件，在inst:AddComponent("inspectable")的下一行插入inst:AddTag("fridge")
 2.小猪包可冷藏食品：用记事本打开游戏目录\data\scripts\prefabs\piggyback.lua文件，在inst:AddComponent("inspectable")的下一行插入inst:AddTag("fridge")
 3.坎普斯背包可冷藏食品：用记事本打开游戏目录\data\scripts\prefabs\krampus_sack.lua文件，在inst:AddComponent("inspectable")的下一行插入inst:AddTag("fridge")
+
+
+
+
+
+添加一个选项卡
+local carneytab = AddRecipeTab(STRINGS.CARNEYTAB, 999, "images/hud/carneytab.xml", "carneytab.tex", "carney")
+
+AddRecipe("whiteberet", {GLOBAL.Ingredient("manrabbit_tail", 2), GLOBAL.Ingredient("silk", 6)}, 
+carneytab, TECH.NONE, nil, nil, nil, nil, "carney", 
+"images/inventoryimages/whiteberet.xml", "whiteberet.tex" )
+
+AddRecipe("windyknife", {GLOBAL.Ingredient("walrus_tusk", 1), GLOBAL.Ingredient("dragon_scales", 1), GLOBAL.Ingredient("moonrocknugget", 2)}, 
+carneytab, TECH.NONE, nil, nil, nil, nil, "carney", 
+"images/inventoryimages/windyknife.xml", "windyknife.tex" )
+
+AddRecipe("nylon", {GLOBAL.Ingredient("bearger_fur", 1), GLOBAL.Ingredient("steelwool", 2), GLOBAL.Ingredient("silk", 8)}, 
+carneytab, TECH.NONE, nil, nil, nil, nil, "carney", 
+"images/inventoryimages/nylon.xml", "nylon.tex" )

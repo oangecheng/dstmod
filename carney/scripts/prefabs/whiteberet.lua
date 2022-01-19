@@ -38,6 +38,16 @@ local function onunequip(inst, owner)
     end
 end
 
+
+local function OnIsSummer(inst, issummer)
+    if issummer then
+        inst.components.insulator:SetSummer()
+    else
+        inst.components.insulator:SetWinter()
+    end
+end
+
+
 local function ItemTradeTest(inst, item)
     if item == nil then
         return false
@@ -135,6 +145,9 @@ local function fn(Sim)
         inst.components.insulator:SetInsulation(TUNING.INSULATION_MED + inst.components.whiteberetstatus.insulator)
         inst.components.waterproofer:SetEffectiveness(.2 + inst.components.whiteberetstatus.waterproofer / 100)
     end)
+
+    -- 监听季节变化
+    inst:WatchWorldState("issummer", OnIsSummer)
     
     return inst
 end

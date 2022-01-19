@@ -723,6 +723,31 @@ if not GLOBAL.TheNet:GetIsClient() then
 	end
 end
 
+
+local judge = TUNING.PERISH_FRIDGE_MULT	--获取冰箱的保鲜数值
+
+local function DoReperishable(inst)	
+	if  inst.components.container ~= nil then
+		for k,v in pairs(inst.components.container.slots) do	--遍历有perishable组件的物品
+			if v.components.perishable then
+				v.components.perishable:ReducePercent(-.03)	--加新鲜度
+			end
+		end
+	end
+end
+
+local function nylon_fx(inst)
+	if inst.components.container ~= nil then	--检测是否有这个组件
+		if judge < 0 then	--如果开了冰箱回鲜
+		elseif judge >= 0 then	--如果没开冰箱回鲜需要单独反鲜的话
+			inst:DoPeriodicTask(1, DoReperishable, -.03)	
+		end
+	end
+end
+
+AddPrefabPostInit("nylon",nylon_fx)
+
+
 local carneytab = AddRecipeTab(STRINGS.CARNEYTAB, 999, "images/hud/carneytab.xml", "carneytab.tex", "carney")
 
 AddRecipe("whiteberet", {GLOBAL.Ingredient("manrabbit_tail", 2), GLOBAL.Ingredient("silk", 6)}, 

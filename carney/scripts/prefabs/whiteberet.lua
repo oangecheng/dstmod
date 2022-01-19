@@ -101,6 +101,8 @@ local function fn(Sim)
     inst.entity:AddSoundEmitter()
     
     inst:AddTag("hat")
+      -- 添加防水标签
+    inst:AddTag("waterproofer")
 	
     anim:SetBank("whiteberet")
     anim:SetBuild("whiteberet")
@@ -124,8 +126,6 @@ local function fn(Sim)
 
     -- 添加保暖组件
     inst:AddComponent("insulator")
-    -- 添加防水标签
-    inst:AddComponent("waterproofer")
 
     -- 添加给予组件
     inst:AddComponent("trader")

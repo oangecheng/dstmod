@@ -63,7 +63,8 @@ PrefabFiles = {
 	"angelcrystal",
 	"windyknife",
 	"nylon",
-	"carneychargefx"
+	"carneychargefx",
+	"kj"
     }
 
 Assets = {
@@ -105,6 +106,9 @@ Assets = {
 
 	Asset( "ATLAS", "images/hud/carneytab.xml"),
 	Asset( "IMAGE", "images/hud/carneytab.tex" ),
+
+	Asset("ATLAS", "images/inventoryimages/kj.xml"),			--铠甲
+	Asset("IMAGE", "images/inventoryimages/kj.tex"),
 }
 
 AddStategraphPostInit("wilson", function(self)
@@ -732,6 +736,10 @@ carneytab, TECH.NONE, nil, nil, nil, nil, "carney",
 AddRecipe("nylon", {GLOBAL.Ingredient("bearger_fur", 1), GLOBAL.Ingredient("steelwool", 2), GLOBAL.Ingredient("silk", 8)}, 
 carneytab, TECH.NONE, nil, nil, nil, nil, "carney", 
 "images/inventoryimages/nylon.xml", "nylon.tex" )
+
+AddRecipe("kj",{GLOBAL.Ingredient("armorwood", 1), GLOBAL.Ingredient("armor_sanity", 1),GLOBAL.Ingredient("armormarble", 1), GLOBAL.Ingredient("armorruins", 1),GLOBAL.Ingredient("raincoat", 1)},
+carneytab, TECH.NONE, nil, nil, nil, nil, "carney", 
+"images/inventoryimages/kj.xml", "kj.tex")
 
 STRINGS.CHARACTERS.CARNEY = require "speech_wilson"
 

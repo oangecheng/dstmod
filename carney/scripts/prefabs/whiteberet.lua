@@ -45,23 +45,42 @@ local function ItemTradeTest(inst, item)
         return true
     elseif item.prefab == "silk" then
         return true
+    elseif item.prefab == "pigskin" then
+        return true
     end
     return false
 end
 
 local function OnGemGiven(inst, giver, item)
+
+    -- 使用海象帽升级精神恢复，每个海象帽只能 +1 精神恢复
+    -- 数值2是帽子初始属性，精神 +6
     if item.prefab == "walrushat" then
-        inst.components.whiteberetstatus.dapperness = inst.components.whiteberetstatus.dapperness + 1
-        inst.components.equippable.dapperness = inst.components.whiteberetstatus.dapperness * TUNING.DAPPERNESS_MED / 3 + TUNING.DAPPERNESS_MED
+        local dapperness = inst.components.whiteberetstatus.dapperness
+        inst.components.whiteberetstatus.dapperness = dapperness + 1
+        inst.components.equippable.dapperness = ((dapperness + 1) / 3 + 2)) * TUNING.DAPPERNESS_MED
         inst.components.fueled.currentfuel = inst.components.fueled.maxfuel
     end
     
+    -- 使用蜘蛛网升级保暖
+    -- 每个蜘蛛网 +1 保暖
     if item.prefab == "silk" then
-        inst.components.whiteberetstatus.insulator = inst.components.whiteberetstatus.insulator + 1
-        inst.components.insulator:SetInsulation(TUNING.INSULATION_MED + inst.components.whiteberetstatus.insulator)
+        local insulator = inst.components.whiteberetstatus.insulator
+        inst.components.whiteberetstatus.insulator = insulator + 1
+        inst.components.insulator:SetInsulation(TUNING.INSULATION_MED + insulator + 1)
     end
+
+    -- 使用猪皮升级防水
+    -- 每个猪皮 +1% 的防水
+    if item.prefab == "pigskin" then
+        local waterproofer = inst.components.whiteberetstatus.waterproofer
+        inst.components.whiteberetstatus.waterproofer = waterproofer + 1
+        inst.components.waterproofer:SetEffectiveness(.2 + (waterproofer + 1) / 100)
+    end
+
     inst.SoundEmitter:PlaySound("dontstarve/common/telebase_gemplace")
 end
+
 
 local function fn(Sim)
 	local inst = CreateEntity()
@@ -93,20 +112,28 @@ local function fn(Sim)
     inst.components.equippable:SetOnEquip( onequip )
     inst.components.equippable:SetOnUnequip( onunequip )
 
+    -- 添加保暖组件
     inst:AddComponent("insulator")
+    -- 添加防水标签
+    inst:AddComponent("waterproofer")
 
+    -- 添加给予组件
     inst:AddComponent("trader")
     inst.components.trader:SetAbleToAcceptTest(ItemTradeTest)
     inst.components.trader.onaccept = OnGemGiven
 
+    -- 添加可修复组件
     inst:AddComponent("fueled")
     inst.components.fueled.fueltype = FUELTYPE.USAGE
     inst.components.fueled:InitializeFuelLevel(TUNING.WALRUSHAT_PERISHTIME)
     inst.components.fueled:SetDepletedFn(inst.Remove)
 
+    -- 初始化帽子属性
+    -- 精神恢复/保暖/防水
     inst:DoTaskInTime(.2, function()
-        inst.components.equippable.dapperness = inst.components.whiteberetstatus.dapperness*TUNING.DAPPERNESS_MED/3 +TUNING.DAPPERNESS_MED
+        inst.components.equippable.dapperness = (inst.components.whiteberetstatus.dappernes / 3 + 2) * TUNING.DAPPERNESS_MED
         inst.components.insulator:SetInsulation(TUNING.INSULATION_MED + inst.components.whiteberetstatus.insulator)
+        inst.components.waterproofer:SetEffectiveness(.2 + inst.components.whiteberetstatus.waterproofer / 100)
     end)
     
     return inst

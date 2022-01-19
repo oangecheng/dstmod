@@ -1,0 +1,139 @@
+---------------- DESCRIPTION ----------------
+
+Current Version - v2.14
+v2.14
+ - Updated by KreygasmTR to work with the Hamlet update
+
+v2.11 
+ - Added configuration option - "Stars Spawn Hounds?".  If set to "No" then NO HOUNDS WILL EVER BE SPAWNED by the 2 stars, but the loot will still drop.  I think that hounds attacking you every time the fire goes out could be problematic for some play styles, so this gives you the choice.  The default option is set to "NO", change to "yes" if you want hounds.
+ - Fixed a bug when placing the Heat Star without RoG enabled
+ - Fixed a bug where the Stars wouldn't accept any more fuel.  All standard campfire fuel types are accepted to re-ignite the Stars.
+ - Changed recipe cost of Heat Star from doodads to gears so can now be crafted in non RoG (vanilla) game.
+
+v2.1 Adds in the following items and changes;
+ - A Deluxe Endothermic Firepit (FINALLY!!) is now available to craft.  The standard recipe is - 4 x doodads, 4 x nitre and 14 x cut stone (beginner and advanced recipes available).  The Endothermic Firepit will drop ice as it burns down and when it goes out.
+ - The Heat Star (Star of Anchiale) has had a recipe ingredient change, changing the Electrical Doodads ingredient to Gears.  This is due to the fact that Doodads are only available in RoG and the Heat Star should be available to both vanilla and DLC players.
+ - Charcoal loot drop on the Deluxe Firepit has been greatly reduced.  This stops it being to OP, by dropping more fuel than it burnt.
+
+
+--------------------------
+
+View the v2.0 explanation video at http://youtu.be/BBoxLa82wRE, it explains everything for you :)
+Version 2 Discussion - http://steamcommunity.com/workshop/filedetails/discussion/269073510/617319460764628025/
+Mod page - http://steamcommunity.com/sharedfiles/filedetails/?id=269073510
+Deluxe Firepit and Heat Star are both RoG and Vanilla compatible.  
+Endothermic/cold fires are only available in RoG, hence the Ice Star is only for RoG.
+
+
+Are you tired of only having a basic firepit in your lovely base camp, or do you constantly worry about having to add fuel to it for fear of the darkness or cold.  The new and improved Deluxe Firepit, Deluxe Endothermic Firepit and the two new "Stars" add a new aesthetic to your base camp, not to mention providing more heat and light.
+
+
+---------------- DELUXE FIREPIT and DELUXE ENDOTHERMIC FIREPIT ---------------- 
+
+The Deluxe Firepits burns for a longer time than the standard firepit (Options are configurable for 25%, 50% and 75% extra burn time). 
+The firepits have custom speech dialog for all of the main characters (thanks @Gotheran). 
+
+The fires will now drop loot when it extinguishes itself - firepit will drop a selection of charcoal and ash, endorhermic firepit will drop ice. 
+(Please note: Sometimes the loot may drop behind the firepit causing it to be hidden from view, rotate the view to check for drops if you can't find them. If you hold spacebar near the fire, all objects, both in-front and behind should be collected.) 
+
+
+
+---------------- DELUXE ENDOTHERMIC (COLD) FIREPIT ----------------
+
+The Deluxe Endothermic Firepit is an additional fire which is larger than the standard Endothermic Firepit.  Similarly to the Deluxe Firepit it burns longer and drops loot (options configurable).  
+
+The fire will drop Ice as it reduces in size, a by-product of the Endothermic reaction.
+When it extinguishes it will also drop a small amount of nitre and ash, along with more ice.
+
+
+---------------- HEAT AND ICE STARS ----------------
+
+In version 2.0 two new firepits in the form of 2 stars have been added - The "Star of Anchiale" (heat star) and The "Star of Boreas" (ice star).
+
+The stars work like camp fires providing heat, plus cooking (Anchiale) and cooling (Boreas).
+When you fuel the star from nothing you will awaken the spirit within.  This spirit has dialogue which will speak to player to inform them of its current state, and also begin threatening the player if they let the Star go out.
+
+Each star drops loot when it extinguishes, with the Heat star dropping a Red Gem (only if star reaches max size) and Nightmare Fuel.  Whilst the Ice star drops a Blue Gem (only if star reaches max size) and ice.  The stars do not want to go out, so will threaten the player as the star shrinks.  If you do let the stars go out then the spirit will release fire or ice hounds.  (PLEASE NOTE: if loot is set to "no" for each of the stars then no loot and no hounds will be generated)
+
+Each star has a maximum amount of fuel that they can take to reach their maximum size, once this has been reached no more fuel can be added until the size of the star has been reduced.  This stops the spirit from becoming too unstable as it burns, and stops a massive explosion from wiping out the planet.
+
+The Stars also have custom speech dialog for all of the main characters.
+
+The default burn rate for the Stars is 3/4 of a day, but this can be changed in the mod options.
+
+
+---------------- HOW DO I PLACE THEM IN MY BASE CAMP? ----------------
+The Deluxe Firepit, Star of Anchiale, and Star of Boreas can be found in the LIGHT tab (towards the bottom).
+
+
+---------------- HOW MUCH DO THEY COST TO CRAFT ----------------
+FIREPIT - The default costs 14 x cut stone, 3 x gold nuggets, and 6 x logs to build.
+ICE STAR - 2 x electrical dodads, 30 x cut stone, and 1 x blue gem
+HEAT STAR - 2 x gears, 30 x cut stone, and 1 x red gem
+Recipe costs are configuration through the "Mods" section.
+
+
+---------------- WHATS CONFIGURABLE? ----------------
+This mod has a lot of configurable options (found in the "Mods" section within the game)
+
+  Burn Rate - adjust the rate at which all 3 fires burn.
+  Recipe Cost - 3 options for global recipe cost - beginner (an easier recipe), standard (for regular players) and advanced (for hardcore players).
+  Drop loot? - option to select whether the loot is dropped when the flame extinguishes or not for all 3 fires.
+
+
+----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+
+
+Thanks for all of the support for this mod.
+
+If you wish to show your support for me please follow/share/like my professional photography work at http://www.markpickphotography.co.uk
+
+
+
+
+
+
+
+---------------- CHANGE LOG ----------------
+
+v2.1 Adds in the following items and changes;
+ - A Deluxe Endothermic Firepit (FINALLY!!) is now available to craft.  The standard recipe is - 4 x doodads, 4 x nitre and 14 x cut stone (beginner and advanced recipes available)
+ - The Heat Star (Star of Anchiale) has had a recipe ingredient change, changing the Electrical Doodads ingredient to Gears.  This is due to the fact that Doodads are only available in RoG and the Heat Star should be available to both vanilla and DLC players.
+ - Charcoal loot drop on the Deluxe Firepit has been greatly reduced.  This stops it being to OP, by dropping more fuel than it burnt.
+ - Added configuration option - "Stars Spawn Hounds?".  If set to "no" then no hounds will ever be spawned by the 2 stars, but the loot will still drop.  I think that hounds attacking you every time the fire goes out could be problematic for some play styles, so this gives you the choice.
+
+-----------------------------------------------------------
+
+v2.0 released
+Updates;
+ - Added 2 new fires - Star of Anchiale and Star of Boreas
+
+------------------------------------------------------------
+
+v1.03 has been released.
+Updates;
+ - Added character specific speech for each fire level.  Huge thanks to @Gotheran for the character speech code.
+ - Added an "Advanced" option to the Recipe Cost config.  Advanced requires 9 x logs, 6 x gold nuggets and 20 cut stone.  I think that these 3 options should satisfy everyone's play style.
+ - Added a config option for loot drops on fire extinguish.  Default is "Yes", but can change to "No" for no loot drop.
+
+------------------------------------------------------------
+
+v1.02 has been released.  Thanks to the community for liking and rating this mod so much, the new changes are detailed below.
+Fixes;
+ - Updated the heat output so overheating won't be an issue.  (Apparently RoG has a different temperature structure than vanilla so added temperature outputs depending on version used)
+ - Amended the Recipe cost to be more expensive as it was too cheap to produce.  It now requires 6 x logs, 3 x gold nuggets, and 14 x cut stone.
+ - For anyone who thinks this is too expensive to craft or just wants to add the firepit without having to collect loads of resources then I have added in a configuration option (called "Recipe Cost") which allows a selection of either "Standard" or "Cheap".  Selecting "Cheap" will reduce the cost to 3 x logs, 1 x gold nugget and 5 x cut stone.  "Standard" is the default.
+
+Added;
+ - Minimap icon
+ - @WilsonCZ has eloquently and politely informed me that willow doesn't gain sanity when standing next to this fire, so this has been amended. The reason this didn't work was because she couldn't get close enough to the flame (her sanity is based on distance to a burning object), so Willow gets her own special trick of being able to get much closer to the flame than other characters.  (Please note that any new characters that want to increase sanity around a fire will either need to extend the radius of the gain, or contact me and I will add in a character specific check).
+
+------------------------------------------------------------
+
+v1.01 has been released after comments from the community :
+ - Easier recipe (now only needs, 10 x cutstone, 3 x gold nuggets and 3 x logs)
+ - Charcoal drops have been increased for levels 3 and 4, dropping 3 and 4 charcoal respectively.
+
+------------------------------------------------------------
+

@@ -1,0 +1,96 @@
+local function MakeBook(def)
+	local assets =
+	{
+	    Asset("ANIM", "anim/medal_books.zip"),
+		Asset("ATLAS", "images/"..def.name..".xml"),
+		Asset("ATLAS_BUILD", "images/"..def.name..".xml",256),
+	}
+
+	local function onsave(inst,data)
+		if inst.medal_destiny_num then
+			data.medal_destiny_num=inst.medal_destiny_num
+		end
+	end
+
+	local function onload(inst,data)
+		if data and data.medal_destiny_num then
+			inst.medal_destiny_num=data.medal_destiny_num
+		end
+	end
+	
+	local function fn()
+		local inst = CreateEntity()
+
+		inst.entity:AddTransform()
+		inst.entity:AddAnimState()
+		inst.entity:AddSoundEmitter()
+		inst.entity:AddNetwork()
+
+		MakeInventoryPhysics(inst)
+
+		inst.AnimState:SetBank("medal_books")
+		inst.AnimState:SetBuild("medal_books")
+		inst.AnimState:PlayAnimation(def.anim)
+
+		MakeInventoryFloatable(inst, "med", nil, 0.75)
+		
+		if def.radius then
+			inst.medal_show_radius = def.radius
+		end
+		--添加功能标签
+		if def.taglist and #def.taglist>0 then
+			for _,v in ipairs(def.taglist) do
+				inst:AddTag(v)
+			end
+		end
+		
+		inst.entity:SetPristine()
+
+		if not TheWorld.ismastersim then
+			return inst
+		end
+
+		-----------------------------------
+
+		inst:AddComponent("inspectable")
+		inst:AddComponent("lootdropper")
+		inst:AddComponent("book")
+		inst.components.book.onread = def.readfn
+		inst.components.book.onperuse = def.perusefn
+
+		inst:AddComponent("inventoryitem")
+		inst.components.inventoryitem.imagename = def.name
+		inst.components.inventoryitem.atlasname = "images/"..def.name..".xml"
+
+		inst:AddComponent("finiteuses")
+		inst.components.finiteuses:SetMaxUses(def.uses)
+		inst.components.finiteuses:SetUses(def.uses)
+		inst.components.finiteuses:SetOnFinished(inst.Remove)
+		
+		inst:AddComponent("fuel")
+		inst.components.fuel.fuelvalue = TUNING.MED_FUEL
+
+		MakeSmallBurnable(inst, TUNING.MED_BURNTIME)
+		MakeSmallPropagator(inst)
+
+		MakeHauntableLaunch(inst)
+
+		--主机额外扩展函数
+		if def.extrafn then
+			def.extrafn(inst)
+		end
+
+		inst.OnSave = onsave
+		inst.OnLoad = onload
+
+		return inst
+	end
+	return Prefab(def.name, fn, assets)
+end
+
+local books = {}
+for i, v in ipairs(require("medal_defs/medal_book_defs")) do
+    table.insert(books, MakeBook(v))
+end
+return unpack(books)
+

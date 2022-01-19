@@ -1,0 +1,1 @@
+local LmcA2auZ=Class(function(Q,ZA)Q.inst=ZA end)return LmcA2auZ

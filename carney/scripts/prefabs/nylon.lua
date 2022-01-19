@@ -69,6 +69,8 @@ local function fn()
     inst:AddComponent("insulator")
     inst.components.insulator:SetInsulation(TUNING.INSULATION_LARGE)
 
+    inst:AddTag("fridge")
+
     MakeHauntableLaunchAndDropFirstItem(inst)
 
     return inst

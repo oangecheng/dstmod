@@ -5,6 +5,10 @@ local Ingredient = GLOBAL.Ingredient
 local RECIPETABS = GLOBAL.RECIPETABS
 local TECH = GLOBAL.TECH
 
+
+require 'strings_zaxitems_c'
+
+
 PrefabFiles = {
 	"kj",
 	"lingdongamulet",	

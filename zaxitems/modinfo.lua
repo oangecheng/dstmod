@@ -5,7 +5,7 @@ description = "LevelUp!"
 -- 作者
 author = "Zax"
 -- 版本
-version = "0.2"
+version = "0.3"
 -- klei官方论坛地址，为空则默认是工坊的地址
 forumthread = ""
 -- modicon 下一篇再介绍怎么创建的

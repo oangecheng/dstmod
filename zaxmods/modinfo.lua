@@ -31,7 +31,19 @@ configuration_options = {
 		options = {
 			{ description = "否", data = false, hover = "" },
 			{ description = "是", data = true, hover = ""},
-		}
+		},
+		default = true,
+
+	},
+	{
+		name = "EnableZaxDagger",
+		label = "是否启用微风短剑",
+		hover = "升级自己的短剑吧！"
+		options = {
+			{ description = "否", data = false, hover = "" },
+			{ description = "是", data = true, hover = ""},
+		},
+		default = true,
 
 	},
 }

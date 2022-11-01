@@ -1,7 +1,7 @@
-MAX_DAMAGE = 80
-DEF_SPEED = 1.1
-MAX_SPEED = 1.5
-MAX_USES = 2000
+MAX_DAMAGE = 80 -- 最大攻击力
+DEF_SPEED = 1.1 -- 默认移速
+MAX_SPEED = 1.5 -- 最大移速加成
+MAX_USES = 2000 -- 最大使用次数上限
 
 -- 可以提升攻击力的物品
 DAMAGE_ITEM_DEFS = {
@@ -52,7 +52,7 @@ if GLOBAL.TheNet:GetIsServer() then
 end
 
 
-
+-- 查找对应列表中物品的属性值
 local function findItemValue(item, items)
 	if item==nil or item.prefab==nil then
 		return nil
@@ -69,7 +69,7 @@ local function findItemValue(item, items)
 end
 
 
-
+-- 判断物品是否可以给予
 local function itemTradeTest(inst, item)
 	local finiteuses = inst.components.finiteuses
 	local level = inst.components.weaponlevel
@@ -94,12 +94,6 @@ local function itemTradeTest(inst, item)
 end
 
 
-local function updateSpeed(inst)
-	local weaponlevel = inst.components.weaponlevel
-	inst.components.equippable.walkspeedmult = weaponlevel.speed
-end
-
-
 local function updateMaxUses(inst, maxUses)
 	local finiteuses = inst.components.finiteuses
 	local percent = finiteuses.current / finiteuses.total
@@ -108,55 +102,72 @@ local function updateMaxUses(inst, maxUses)
 end
 
 
-local function onItemGiven(inst, giver, item)
-	local weaponlevel = inst.components.weaponlevel
-
-	-- 伤害增强
-    local damage = findItemValue(item, DAMAGE_ITEM_DEFS)
+-- 伤害增强
+local function damageItem(inst, item)
+	local wl = inst.components.weaponlevel
+	local damage = findItemValue(item, DAMAGE_ITEM_DEFS)
 	if damage ~= nil then
-		weaponlevel.damage = weaponlevel.damage + damage
-		inst.components.weapon:SetDamage(weaponlevel.damage)
+		wl.damage = wl.damage + damage
+		inst.components.weapon:SetDamage(wl.damage)
 	end
+end
 
-	-- 速度提升
+
+-- 速度提升
+local function speedItem(inst, item)
+	local wl = inst.components.weaponlevel
 	local speed = findItemValue(item, SPEED_ITEM_DEFS)
 	if speed ~= nil then
-		weaponlevel.speed = weaponlevel.speed + speed
-		inst.components.equippable.walkspeedmult = weaponlevel.speed
+		wl.speed = wl.speed + speed
+		inst.components.equippable.walkspeedmult = wl.speed
 	end
+end
 
-	-- 最大使用次数提升
+
+-- 最大使用次数提升
+local function enlargeMaxUses(inst, item)
+	local wl = inst.components.weaponlevel
 	local maxUses = findItemValue(item, MAX_USES_ITEM_DEFS) 
 	if maxUses ~= nil then
-		weaponlevel.maxUses = weaponlevel.maxUses + maxUses
-		updateMaxUses(inst, weaponlevel.maxUses)
+		wl.maxUses = wl.maxUses + maxUses
+		updateMaxUses(inst, wl.maxUses)
 	end
+end
 
-	-- 恢复耐久
+
+-- 恢复耐久
+local function recoverUses(inst, item)
+	local wl = inst.components.weaponlevel
 	local uses = findItemValue(item, USES_ITEM_DEFS)
 	if uses ~= nil then
 		local finiteuses = inst.components.finiteuses
-		local percent = math.min(finiteuses:GetPercent() + 0.2, 1)
+		local percent = math.max(100/wl.maxUses, 0.2)
+		percent = math.min(finiteuses:GetPercent() + percent, 1)
 		finiteuses:SetPercent(percent)
-		inst.components.weapon:SetDamage(weaponlevel.damage)
+		-- 恢复攻击力
+		inst.components.weapon:SetDamage(wl.damage)
 	end
+end
 
+
+-- 给予物品
+-- 提升攻击力/移速加成/最大使用次数/恢复耐久
+local function onItemGiven(inst, giver, item)
+	damageItem(inst, item)
+	speedItem(inst, item)
+	enlargeMaxUses(inst, item)
+	recoverUses(inst, item)
 	giver.SoundEmitter:PlaySound("dontstarve/common/telebase_gemplace")
 end
 
 
+-- 耐久为0不消失
+-- 攻击力变为0
 local function onUseFinished(inst)
 	inst.components.finiteuses:SetPercent(0)
 	inst.components.weapon:SetDamage(0)
 end
 
-
-local function init(inst)
-	inst:AddComponent("trader")
-    inst.components.trader:SetAbleToAcceptTest(itemTradeTest)
-    inst.components.trader.onaccept = onItemGiven
-    inst.components.finiteuses:SetOnFinished(onUseFinished)
-end
 
 
 local weaponlevel = Class(
@@ -166,10 +177,16 @@ local weaponlevel = Class(
 		self.maxUses = inst.components.finiteuses.total or 0
 		self.speed = DEF_SPEED
 
+		-- 属性赋初值
 		inst.components.finiteuses:SetMaxUses(self.maxUses)
 		inst.components.weapon:SetDamage(self.damage)
 		inst.components.equippable.walkspeedmult = self.speed
-		init(self.inst)
+		
+		-- 添加可交易组件
+		inst:AddComponent("trader")
+		inst.components.trader:SetAbleToAcceptTest(itemTradeTest)
+		inst.components.trader.onaccept = onItemGiven
+		inst.components.finiteuses:SetOnFinished(onUseFinished)
 	end,
 	nil,
 	{}
@@ -191,7 +208,7 @@ function weaponlevel:OnLoad(data)
 	self.damage = data.damage or 0
 	self.speed = data.speed or DEF_SPEED
 	self.maxUses = data.maxUses or 0
-	updateSpeed(self.inst)
+	self.inst.components.equippable.walkspeedmult = weaponlevel.speed
 	updateMaxUses(self.inst, self.maxUses)
 end
 

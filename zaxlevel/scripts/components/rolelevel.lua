@@ -1,7 +1,7 @@
 --角色升级组件
 --角色初始属性都会被替换为三维 100 100 100
 --每提升一级全属性 +1
---击杀怪物获得经验进行升级
+--击杀怪物 或者 吃好吃的食物 获得经验进行升级
 
 
 -- 可获得经验的食物定义
@@ -16,6 +16,11 @@ local FOOD_DEFS = {
     {"fish", 500}, -- 包含鱼的食物
     {"eel", 300}, -- 鳗鱼
 }
+
+
+local DEF_HUNGER = 100
+local DEF_SANITY = 100
+local DEF_HEALTH = 100
 
 
 -- 查找吃下的食物是否能够获得经验
@@ -40,23 +45,24 @@ end
 
 
 -- 角色升级
-local function onRoleLevelUp(inst)
-	-- 播放音效
-	inst.SoundEmitter:PlaySound("dontstarve/characters/wx78/levelup")
-	inst.components.talker:Say("我变得更强了!")
+local function onLevelUp(inst)
 
 	local lv = inst.components.rolelevel.level
+	-- 播放音效
+	inst.SoundEmitter:PlaySound("dontstarve/characters/wx78/levelup")
+	inst.components.talker:Say("我变得更强了! 等級"..lv)
+
     --饥饿判定
 	local hunger_percent = inst.components.hunger:GetPercent()
-	inst.components.hunger.max = 100 + lv * 1
+	inst.components.hunger.max = DEF_HUNGER + lv * 1
 	inst.components.hunger:SetPercent(hunger_percent)
 	--脑力判定
 	local sanity_percent = inst.components.sanity:GetPercent()
-	inst.components.sanity.max = 100 + lv * 1
+	inst.components.sanity.max = DEF_SANITY + lv * 1
 	inst.components.sanity:SetPercent(sanity_percent)
 	--血量判定
 	local health_percent = inst.components.health:GetPercent()
-	inst.components.health.maxhealth = 100 + lv * 1
+	inst.components.health.maxhealth = DEF_HEALTH + lv * 1
 	inst.components.health:SetPercent(health_percent)
 end
 
@@ -71,14 +77,15 @@ local function onGetExp(inst, exp)
         clevel.exp = 0
         clevel.level = clevel.level + 1
 
-        onRoleLevelUp(inst)
+        onLevelUp(inst)
+        -- 升级后回血20%
         inst.components.health:DoDelta(inst.components.health.maxhealth / 5)
     end
 end
 
 
 -- 监听杀怪物的事件
-local function onkilledother(inst, data)
+local function onKilledOther(inst, data)
     local victim = data.victim
     local maxVictimHealth = 0
     if victim.components.freezable or victim:HasTag("monster") and victim.components.health then
@@ -110,9 +117,9 @@ local rolelevel = Class(
         self.inst = inst
         self.level = 0
         self.exp = 0
-        self.zhunger = 100
-        self.zhealth = 100
-        self.zsanity = 100
+        self.zhunger = DEF_HUNGER
+        self.zhealth = DEF_HEALTH
+        self.zsanity = DEF_SANITY
 
         inst.components.hunger.max = self.zhunger
         inst.components.health.maxhealth = self.zhealth
@@ -122,7 +129,7 @@ local rolelevel = Class(
         inst.components.health:SetPercent(1)
 
         -- 监听杀怪事件
-        self.inst:ListenForEvent("killed", onkilledother)
+        self.inst:ListenForEvent("killed", onKilledOther)
         self.inst.components.eater:SetOnEatFn(onEatFood)
 
     end,
@@ -147,9 +154,9 @@ function rolelevel:OnLoad(data)
     -- 读取存储的值
     self.level = data.level or 0
     self.exp = data.exp or 0
-    self.zhunger = data.zhunger or 100
-    self.zhealth = data.zhealth or 100
-    self.zsanity = data.zsanity or 100
+    self.zhunger = data.zhunger or DEF_HUNGER
+    self.zhealth = data.zhealth or DEF_HEALTH
+    self.zsanity = data.zsanity or DEF_SANITY
 
     -- 角色属性赋值
     local inst = self.inst

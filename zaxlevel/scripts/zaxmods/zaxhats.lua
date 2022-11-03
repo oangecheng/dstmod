@@ -19,14 +19,14 @@ end
 
 
 local function acceptTest(inst, item, giver)
-    local zxinsulator = inst.components.zxinsulator
-    return zxinsulator:AcceptTest(inst, item, giver)
+    return inst.components.zxinsulator:AcceptTest(inst, item, giver) 
+        or inst.components.zxdapperness:AcceptTest(item)
 end
 
 
 local function onItemGiven(inst, giver, item)
-    local zxinsulator = inst.components.zxinsulator
-    zxinsulator:GiveItem(inst, giver, item)
+   inst.components.zxinsulator:GiveItem(inst, giver, item)
+   inst.components.zxdapperness:GiveItem(giver, item)
 end
 
 
@@ -34,6 +34,7 @@ if GLOBAL.TheNet:GetIsServer() then
     AddPrefabPostInit("eyebrellahat", function(inst)
         inst:AddComponent("trader")
         inst:AddComponent("zxinsulator")
+        inst:AddComponent("zxdapperness")
 
         inst.components.trader:SetAbleToAcceptTest(acceptTest)
         inst.components.trader.onaccept = onItemGiven

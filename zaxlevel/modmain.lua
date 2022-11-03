@@ -1,5 +1,7 @@
 local _G = GLOBAL
 
+-- 是否开启角色升级功能
+local useRoleLevelUp = GetModConfigData('UseRoleLevelUp')
 -- 是否开启多倍采集功能
 local useMorePick = GetModConfigData('UseMorePick')
 -- 是否开启额外掉落功能
@@ -15,8 +17,11 @@ if useMorePick then
 	modimport("scripts/zaxmods/zaxmorepick.lua")
 end
 
+if useWeaponLevelUp then
+	modimport("scripts/zaxmods/zaxweapons.lua")
+end
 
-modimport("scripts/zaxmods/zaxweapons.lua")
+modimport("scripts/zaxmods/zaxhats.lua")
 
 
 if GLOBAL.TheNet:GetIsServer() then
@@ -24,7 +29,9 @@ if GLOBAL.TheNet:GetIsServer() then
 	AddPlayerPostInit(function (inst)
 
 		-- 角色升级
-		inst:AddComponent("rolelevel")
+		if useRoleLevelUp then 			
+			inst:AddComponent("rolelevel")
+		end
 
 		-- 额外掉落
 		if useMoreDrop then 

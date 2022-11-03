@@ -24,6 +24,17 @@ api_version = 10
 
 -- mod的配置项，后面介绍
 configuration_options = {
+
+	{
+		name = "UseRoleLevelUp",
+		label = "角色升级",
+		options = {
+			{description = "开启", data = true},
+			{description = "关闭", data = false},
+		},
+		default = false,
+	},
+
 	{
 		name = "UseMorePick",
 		label = "多倍采集",
@@ -31,7 +42,7 @@ configuration_options = {
 			{description = "开启", data = true},
 			{description = "关闭", data = false},
 		},
-		default = true,
+		default = false,
 	},
 
 	{
@@ -41,7 +52,7 @@ configuration_options = {
 			{description = "开启", data = true},
 			{description = "关闭", data = false},
 		},
-		default = true,
+		default = false,
 	},
 
 	{
@@ -51,9 +62,8 @@ configuration_options = {
 			{description = "开启", data = true},
 			{description = "关闭", data = false},
 		},
-		default = true,
+		default = false,
 	},
-
 
 	{
 		name = "UseWeaponLevelUp",
@@ -62,7 +72,7 @@ configuration_options = {
 			{description = "开启", data = true},
 			{description = "关闭", data = false},
 		},
-		default = true,
+		default = false,
 	},
 
 	

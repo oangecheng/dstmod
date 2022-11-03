@@ -8,9 +8,9 @@
 local FOOD_DEFS = {
     {"moqueca", 3000}, -- 海鲜杂烩
     {"lobsterdinner", 3000}, --龙虾正餐
-    {"surfnturf", 1000}, -- 海鲜牛排
-    {"honeyham", 1000}, -- 蜜汁火腿
-    {"turkeydinner", 1000}, -- 火鸡正餐
+    {"surfnturf", 2000}, -- 海鲜牛排
+    {"honeyham", 2000}, -- 蜜汁火腿
+    {"turkeydinner", 2000}, -- 火鸡正餐
     {"bonestew", 1000}, -- 大肉汤
     {"meat_dried", 500}, -- 风干肉
     {"fish", 500}, -- 包含鱼的食物
@@ -105,7 +105,8 @@ local function onEatFood(inst, data)
     local target = findFood(inst, data)
     if target ~= nil then
         local foodExp = target[2]
-        inst.components.talker:Say("味道好极了! 经验 +"..findFood)
+        inst.components.talker:CancelSay()
+        inst.components.talker:Say("味道好极了! 经验 +"..foodExp)
         onGetExp(inst, foodExp)
     end
 end

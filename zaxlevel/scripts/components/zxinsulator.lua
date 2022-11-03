@@ -1,7 +1,7 @@
 
 -- 能力解锁
 UNLOCK_ITEM_W = "bearger_fur" -- 熊皮解锁保暖
-UNLOCK_ITEM_S = "dragon_scales" -- 龙鳞解锁隔热
+UNLOCK_ITEM_S = "townportaltalisman" -- 砂石解锁隔热
 
 -- 能力提升
 UPGRDADE_ITEM_W = "trunk_winter" -- 冬象鼻提升保暖

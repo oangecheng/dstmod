@@ -24,6 +24,15 @@ api_version = 10
 
 -- mod的配置项，后面介绍
 configuration_options = {
+	{
+		name = "UseUpgradePolicy",
+		label = "物品升级概率成功",
+		options = {
+			{description = "开启", data = true},
+			{description = "关闭", data = false},
+		},
+		default = false,
+	},
 
 	{
 		name = "UseRoleLevelUp",

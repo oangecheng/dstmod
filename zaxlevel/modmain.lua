@@ -1,5 +1,7 @@
 local _G = GLOBAL
 
+
+local useUpgradePolicy = GetModConfigData('UseUpgradePolicy')
 -- 是否开启角色升级功能
 local useRoleLevelUp = GetModConfigData('UseRoleLevelUp')
 -- 是否开启多倍采集功能
@@ -11,6 +13,9 @@ local useRoleStrenth = GetModConfigData('UseRoleStrenth')
 -- 是否开启武器可升级
 -- 目前仅支持战斗长矛
 local useWeaponLevelUp = GetModConfigData('UseWeaponLevelUp')
+
+
+TUNING.useUpgradePolicy = useUpgradePolicy
 
 
 if useMorePick then
